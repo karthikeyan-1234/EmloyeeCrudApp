@@ -1,32 +1,44 @@
 <h2 mat-dialog-title>Add New Product</h2>
 <div mat-dialog-content>
-    <mat-form-field class="example-form-field">
-      <mat-label>Name</mat-label>
-      <input matInput type="text">
-    </mat-form-field>
+    <form [formGroup]="newProductForm">
+      <mat-form-field class="example-form-field">
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput type="text">
+      </mat-form-field>
 
-    <mat-form-field class="example-form-field">
-      <mat-label>Category</mat-label>
-      <mat-select placeholder="Category">
-        <mat-option *ngFor="let category of categories" [value]="category.id">
-          {{ category.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>    
+      <mat-form-field class="example-form-field">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category" placeholder="Category">
+          <mat-option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>    
 
-    <mat-form-field class="example-form-field">
-      <mat-label>Rate</mat-label>
-      <input matInput type="number">
-    </mat-form-field>
+      <mat-form-field class="example-form-field">
+        <mat-label>Rate</mat-label>
+        <input formControlName="rate" matInput type="number">
+      </mat-form-field>
 
-    <mat-form-field class="example-form-field">
-      <mat-label>Entered Date</mat-label>
-      <input matInput [matDatePicker]="picker">
-      <mat-date-picker-toggle matSuffix [for]="picker"></mat-date-picker-toggle>
-      <mat-date-picker #picker></mat-date-picker>
-    </mat-form-field>
+      <!-- <mat-form-field class="example-form-field">
+        <mat-label>Entered Date</mat-label>
+        <input formControlName="enteredDate" matInput [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker">
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-label>Freshness State</mat-label>
+
+      <mat-radio-group formControlName="state">
+        <mat-radio-button *ngFor="let state of freshStates" [value]="state">
+          {{state}}
+        </mat-radio-button>
+      </mat-radio-group> -->
+    </form>
 </div>
-<mat-dialog-actions>
-  <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>
+<div mat-dialog-action [align]="'end'">
+  <button mat-button cdkFocusInitial (click)="formSubmitted()" mat-dialog-close>Ok</button>
   <button mat-button mat-dialog-close>Cancel</button>
-</mat-dialog-actions>
+</div>

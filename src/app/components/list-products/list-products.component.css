@@ -1,0 +1,21 @@
+.button-with-margin {
+    margin-right: 10px; /* Adjust the margin as needed */
+  }
+  .mat-table-container {
+    max-height: 400px; /* Set a fixed height for the table container */
+    overflow: auto; /* Enable scrolling */
+  }
+  
+  mat-header-cell {
+    position: sticky;
+    top: 0; /* Stick the header at the top of the container */
+    z-index: 1; /* Ensure the header is above table rows */
+    background: white; /* Set background to avoid overlap effects */
+  }
+  
+  mat-header-row {
+    position: sticky;
+    top: 0; /* Stick the header at the top of the container */
+    z-index: 1; /* Ensure the header is above table rows */
+    background: white; /* Set background to avoid overlap effects */
+  }

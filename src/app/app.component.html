@@ -4,19 +4,11 @@
   </button>
   <span>My App</span>
   <span class="example-spacer"></span>
-  <button mat-raised-button color="warn" (click)="openDialog('1','1')">Add Product</button>
+  <button mat-raised-button color="warn" (click)="openAddDialog('1','1')">Add Product</button>
 </mat-toolbar>
 
 
-<!-- <table mat-table [dataSource]="products" class="mat-elevation-z8">
-
- Position Column 
- <ng-container matColumnDef="name">
-  <th mat-header-cell *matHeaderCellDef> No. </th>
-  <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-</ng-container>
-
-</table> -->
+<app-list-products [products]="products"></app-list-products>
 
 
 <router-outlet />
