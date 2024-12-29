@@ -1,21 +1,20 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ProductService } from '../../services/product.service';
-import { Product } from '../../models/product';
+import { ProductService } from '../../../services/product.service';
+import { Product } from '../../../models/product';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table'  
-import { ProductInput } from '../../models/product-input';
+import { ProductInput } from '../../../models/product-input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInput, MatInputModule } from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { ProductCategory } from '../../models/product-category';
+import { ProductCategory } from '../../../models/product-category';
 import { MatSelectModule } from '@angular/material/select';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import Swal from 'sweetalert2';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { CommunicationService } from '../../services/communication.service';
-import { MessageType } from '../../enums/message-type.enum';
-
+import { CommunicationService } from '../../../services/communication.service';
+import { MessageType } from '../../../enums/message-type.enum';
 
 @Component({
   selector: 'app-list-products',
@@ -37,8 +36,15 @@ export class ListProductsComponent implements OnInit {
   constructor(private productService:ProductService,private commService:CommunicationService) {
     
 
-    this.productService.getAllCategories().subscribe(res => {
+    this.productService.getAllCategories().subscribe((res:ProductCategory[]) => {
+      console.log(res);
       this.categories = res;
+    })
+
+    this.productService.getAllProducts().subscribe((res) => {
+      this.dataSource = new MatTableDataSource(res)
+    },(err) => {
+      
     })
 
     this.commService.currentMessage.subscribe((message) => {
@@ -58,6 +64,9 @@ export class ListProductsComponent implements OnInit {
     this.refreshTable();
   }
 
+  compareCategories(c1: any, c2: any): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
 
   //refresh table
   refreshTable(){
@@ -70,7 +79,12 @@ export class ListProductsComponent implements OnInit {
 
   //editProduct
   editProduct(product:Product){
+    console.log("Editing...")
+    console.log(product);
+    console.log('Editing category:', product.productTypeId);
+    console.log('Available categories:', this.categories);
     this.editedId = product.id;
+    console.log("Edited id now is...",this.editedId);
   }
 
   //deleteProduct

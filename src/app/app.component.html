@@ -1,14 +1,19 @@
-<mat-toolbar color="primary">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-    <mat-icon>supervised_user_circle</mat-icon>
-  </button>
-  <span>My App</span>
-  <span class="example-spacer"></span>
-  <button mat-raised-button color="warn" (click)="openAddDialog('1','1')">Add Product</button>
-</mat-toolbar>
+  <mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" 
+    aria-label="Example icon-button with menu icon" (click)="toggleSideNav()">
+      <mat-icon>{{ isSideNavOpen ? "keyboard_backspace" : "dehaze" }}</mat-icon>
+    </button>
+    <span>My App</span>
+    <span class="example-spacer"></span>
+  </mat-toolbar>
 
-
-<app-list-products [products]="products"></app-list-products>
-
-
-<router-outlet />
+  <mat-drawer-container class="example-container">
+    <mat-drawer mode="side" opened="{{ isSideNavOpen }}">
+      <mat-nav-list>
+        <a mat-list-item routerLink="/masters">Masters</a>
+      </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content>
+      <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container>

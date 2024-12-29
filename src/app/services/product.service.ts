@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Product } from '../models/product';
 import { Observable, of } from 'rxjs';
 import { ProductCategory } from '../models/product-category';
+import { HttpClient } from '@angular/common/http';
+
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,137 +12,57 @@ import { ProductCategory } from '../models/product-category';
 export class ProductService {
 
   products:Product[] = [];
-  productCategories: ProductCategory[] = [
-    { id: 1, name: 'Electronics' },
-    { id: 2, name: 'Clothing' },
-    { id: 3, name: 'Home Goods' },
-    { id: 4, name: 'Books' },
-    { id: 5, name: 'Food' } 
-  ];
+  productCategories: ProductCategory[] = [];
 
-  constructor() { 
+  constructor(private http: HttpClient) { 
 
-    this.products = [
-      {
-        name: 'Laptop',
-        category: this.productCategories[1],
-        rate: 899.99,
-        id: 1
-      },
-      {
-        name: 'Smartphone',
-        category: this.productCategories[1],
-        rate: 599.99,
-        id: 2
-      },
-      {
-        name: 'Headphones',
-        category: this.productCategories[1],
-        rate: 149.99,
-        id: 3
-      },
-      {
-        name: 'T-Shirt',
-        category: this.productCategories[2],
-        rate: 24.99,
-        id: 4
-      },
-      {
-        name: 'Jeans',
-        category: this.productCategories[2],
-        rate: 49.99,
-        id: 5
-      },
-      {
-        name: 'Running Shoes',
-        category: this.productCategories[2],
-        rate: 99.99,
-        id: 6
-      },
-      {
-        name: 'Running socks',
-        category: this.productCategories[3],
-        rate: 59.99,
-        id: 7
-      },
-      {
-        name: 'Weight Training Shoes',
-        category: this.productCategories[2],
-        rate: 48.99,
-        id: 8
-      },
-      {
-        name: 'Wrist Bands',
-        category: this.productCategories[4],
-        rate: 29.99,
-        id: 9
-      },
-      {
-        name: 'Skate rollers',
-        category: this.productCategories[3],
-        rate: 29.99,
-        id: 10
-      },
-      {
-        name: 'Shorts',
-        category: this.productCategories[4],
-        rate: 29.99,
-        id: 11
-      },
-      {
-        name: 'TShirts',
-        category: this.productCategories[2],
-        rate: 29.99,
-        id: 12
-      }
-
-
-
-    ];
+    this.products = [];
 
   }
 
   addProduct(newProduct:Product):Observable<Product | undefined>
   {
-    console.log("adding product..",newProduct);
-    newProduct.id = this.products.length + 1;
-    this.products.push(newProduct);
-    this.products= [...this.products];
-    return of(newProduct);
+    const apiUrl = `${environment.masterUrl}/AddProduct`;
+    return this.http.post<Product>(apiUrl,newProduct);
   }
 
   updateProduct(updatedProduct:Product):Observable<Product | undefined>{
-    let product = this.products.find(p => p.id === updatedProduct.id);
-    if(product){
-      product.name = updatedProduct.name;
-      product.category = updatedProduct.category;
-      product.rate = updatedProduct.rate;
-    }
-    console.log("Updated product list...",this.products);
-    return of(product);
+    const apiUrl = `${environment.masterUrl}/updateProduct`;
+    return this.http.put<Product>(apiUrl,updatedProduct);
   }
 
-  deleteProduct(productId:number):Observable<boolean>{
-    let index = this.products.findIndex(p => p.id === productId);
-    if(index !== -1){
-      this.products.splice(index,1);
-      this.products = [...this.products];
-      return of(true);
-    }
-    return of(false);
+  deleteProduct(productId:number):Observable<Product>{
+    const apiUrl = `${environment.masterUrl}/deleteProduct/${productId}`;
+    return this.http.delete<Product>(apiUrl);
   }
+
+  // getAllProducts():Observable<Product[]>{
+  //   return of(this.products);
+  // }
 
   getAllProducts():Observable<Product[]>{
-    return of(this.products);
+    const apiUrl = `${environment.masterUrl}/getAllProducts`;
+    return this.http.get<Product[]>(apiUrl);
   }
 
-  addProductCategory(newCategory:ProductCategory){
-    this.productCategories.push(newCategory);
-    this.productCategories = [...this.productCategories];
+  addProductCategory(newCategory:ProductCategory):Observable<ProductCategory> {
+    const apiUrl = `${environment.masterUrl}/addProductType`; 
+    return this.http.post<ProductCategory>(apiUrl,newCategory);
   }
+
+  deleteProductCategory(newCategory:ProductCategory):Observable<any>{
+    const apiUrl = `${environment.masterUrl}/deleteProductType/${newCategory.id}`;
+    return this.http.delete(apiUrl);
+  }
+
+  updateProductCategory(newCategory:ProductCategory):Observable<any>{
+    const apiUrl = `${environment.masterUrl}/UpdateProductType`;
+    return this.http.put(apiUrl,newCategory);
+  }  
 
   getAllCategories():Observable<ProductCategory[]>{
-    return of(this.productCategories);
+    const apiUrl = `${environment.masterUrl}/getAllProductTypes`; 
+    return this.http.get<ProductCategory[]>(apiUrl);
   }
 
   getAllFreshnessStates():Observable<string[]>{

@@ -4,8 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { ProductService } from '../../services/product.service';
-import { ProductCategory } from '../../models/product-category';
+import { ProductService } from '../../../services/product.service';
+import { ProductCategory } from '../../../models/product-category';
 import { CommonModule } from '@angular/common';
 import { MatDatepickerModule  } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -14,9 +14,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { Form, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import Swal from 'sweetalert2';
-import { CommunicationService } from '../../services/communication.service';
-import { Product } from '../../models/product';
-import { MessageType } from '../../enums/message-type.enum';
+import { CommunicationService } from '../../../services/communication.service';
+import { Product } from '../../../models/product';
+import { MessageType } from '../../../enums/message-type.enum';
 
 @Component({
   selector: 'app-add-product',
@@ -45,16 +45,10 @@ export class AddProductComponent implements OnInit {
       this.categories = res;
     })
 
-    // this.productService.getAllFreshnessStates().subscribe((res) => {
-    //   this.freshStates = res;
-    // })
-
     this.newProductForm = this.formBuilder.group({
       name: ['', Validators.required],
       category: ['',Validators.required],
       rate: ['0.00', Validators.required]
-      // enteredDate: ['',Validators.required],
-      // state: ['', Validators.required]
     })
 
   }
@@ -68,8 +62,9 @@ export class AddProductComponent implements OnInit {
     const newProduct: Product = {
       id: 0,
       name: this.newProductForm.value.name,
-      category: productCategory,
-      rate: this.newProductForm.value.rate
+      productTypeId: productCategory.id,
+      rate: this.newProductForm.value.rate,
+      category: productCategory
     }
 
     this.productService.addProduct(newProduct).subscribe((res) => {

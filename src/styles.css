@@ -8,3 +8,57 @@ mat-radio-group {
   mat-radio-button {
     margin: 2px;
   }
+
+
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  
+mat-toolbar {
+  position: sticky; /* This is the key to freeze the toolbar */
+  top: 0; 
+  z-index: 1; 
+}
+
+.example-container {
+  position: absolute;
+  height: 500px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.button-with-margin {
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
+.mat-main-container {
+  max-height: 400px; /* Set a fixed height for the table container */
+  display: flex;
+}
+
+.mat-left-part {
+  flex: 90%; 
+}
+
+.mat-middle-part{
+  flex: 1%; 
+}
+
+.mat-right-part {
+  flex: 9%; 
+}
+
+.mat-table-scroll {
+  overflow: auto; /* Enable scrolling */
+}
+
+.mat-mdc-header-cell {
+  background-color: rgb(125, 121, 121);
+  color: rgb(50, 3, 3); /* Optional: Set text color for better contrast */
+}
+
+mat-form-field{
+  height: min-content;
+  width: min-content;
+}

@@ -1,53 +1,52 @@
-  import { Component } from '@angular/core';
-  import { RouterOutlet } from '@angular/router';
+  import { Component, ViewChild } from '@angular/core';
+  import { RouterOutlet, RouterModule } from '@angular/router';
   import { MatToolbar } from '@angular/material/toolbar';
   import { MatIconModule } from '@angular/material/icon';
   import {MatButtonModule} from '@angular/material/button';
   import {MatTableModule} from '@angular/material/table';
   import { CommonModule } from '@angular/common';
-  import { ChangeDetectorRef } from '@angular/core'; // Import ChangeDetectorRef
 
 
-  import {
-    MatDialog,
-    MatDialogActions,
-    MatDialogClose,
-    MatDialogContent,
-    MatDialogRef,
-    MatDialogTitle,
-  } from '@angular/material/dialog';
-  import { AddProductComponent } from './components/add-product/add-product.component';
+  import {MatDialog} from '@angular/material/dialog';
+  import { AddProductComponent } from './masters/product/add-product/add-product.component';
   import { ProductService } from './services/product.service';
   import { Product } from './models/product';
-  import { ListProductsComponent } from "./components/list-products/list-products.component";
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule, MatNavList } from '@angular/material/list';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
   @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, MatToolbar, MatIconModule, MatButtonModule, MatTableModule, CommonModule, ListProductsComponent],
+    imports: [RouterOutlet, MatToolbar, MatIconModule, MatButtonModule, 
+      MatTableModule, CommonModule, MatSidenavModule, MatNavList, MatListModule,
+    RouterModule,HttpClientModule],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
   })
-  export class AppComponent {
+  export class AppComponent  {
     title = 'EmloyeeCrudApp';
     products:Product[] = [];
     displayedColumns: string[] = ['name', 'age']
 
-    constructor(private dialog:MatDialog,private productService:ProductService){
-      this.showAllProducts();
+    sideBarOpen = true;
+
+    sideBarToggler() {
+      this.sideBarOpen = !this.sideBarOpen;
     }
 
-    openAddDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-      this.dialog.open(AddProductComponent, {
-        width: '350px',
-        height: '400px',
-        enterAnimationDuration,
-        exitAnimationDuration,
-      }).afterClosed().subscribe(() => {
-        console.log('The dialog was closed');
-      });
+    isSideNavOpen = true;
+
+  toggleSideNav() {
+    this.isSideNavOpen = !this.isSideNavOpen;
+  }
+
+    constructor(private dialog:MatDialog,private productService:ProductService,private httpClient:HttpClient){
+      //this.showAllProducts();
     }
+
+
 
     showAllProducts(){
       this.productService.getAllProducts().subscribe((products)=> {

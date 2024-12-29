@@ -1,4 +1,3 @@
-<div class="mat-table-container">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
         <!--Handle display of products and inline edit-->
         <ng-container matColumnDef="name">
@@ -22,8 +21,8 @@
                     <!--Wrap it in matformfield-->
                     <mat-form-field>
                         <mat-label>Category</mat-label>
-                        <mat-select [(ngModel)]="element.category">
-                            <mat-option *ngFor="let category of categories" [value]="category">
+                        <mat-select [(ngModel)]="element.productTypeId" >
+                            <mat-option *ngFor="let category of categories" [value]="category.id">
                                 {{ category.name }}
                             </mat-option>
                         </mat-select>
@@ -60,7 +59,6 @@
         </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-</div>
