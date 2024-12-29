@@ -133,9 +133,11 @@ export class ProductService {
     return of(this.products);
   }
 
-  addProductCategory(newCategory:ProductCategory){
+  addProductCategory(newCategory:ProductCategory):Observable<ProductCategory> {
+    newCategory.id = this.productCategories.length + 1;
     this.productCategories.push(newCategory);
     this.productCategories = [...this.productCategories];
+    return of(newCategory);
   }
 
   getAllCategories():Observable<ProductCategory[]>{

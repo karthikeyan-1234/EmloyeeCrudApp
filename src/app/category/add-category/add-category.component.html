@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Add New Category</h2>
+<div mat-dialog-content>
+    <form [formGroup]="newCategoryForm">
+      <mat-form-field class="example-form-field">
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput type="text">
+      </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-action [align]="'end'">
+  <button mat-button cdkFocusInitial (click)="formSubmitted()" mat-dialog-close>Ok</button>
+  <button mat-button mat-dialog-close>Cancel</button>
+</div>

@@ -41,6 +41,12 @@ export class ListProductsComponent implements OnInit {
       this.categories = res;
     })
 
+    this.productService.getAllProducts().subscribe((res) => {
+      this.dataSource = new MatTableDataSource(res)
+    },(err) => {
+      
+    })
+
     this.commService.currentMessage.subscribe((message) => {
 
       console.log("List component subscribed message...",message);
