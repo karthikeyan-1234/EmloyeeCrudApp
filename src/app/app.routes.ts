@@ -22,7 +22,7 @@ export const routes: Routes = [
     },
     {
         "path": "",
-        "redirectTo": "product-main",
+        "redirectTo": "masters",
         "pathMatch": "full"
     }
 ];
