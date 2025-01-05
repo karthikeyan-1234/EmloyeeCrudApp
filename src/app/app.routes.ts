@@ -5,6 +5,7 @@ import { ProductMainComponent } from './masters/product/product-main/product-mai
 import { CategoryMainComponent } from './masters/category/category-main/category-main.component';
 import { MastersComponent } from './masters/masters.component';
 
+
 export const routes: Routes = [
     //Add path to the list-product-categories component
     {
