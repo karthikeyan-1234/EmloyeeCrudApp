@@ -35,16 +35,13 @@ export class ListProductCategoriesComponent {
 
       this.dataSource = new MatTableDataSource(this.categories);
 
-          this.commService.currentMessage.subscribe((message) => {
-      
-            console.log("List component subscribed message...",message);
-      
-            if(message.type === MessageType.Added || message.type === MessageType.Updated || 
-              message.type === MessageType.Deleted || message.type === MessageType.Refresh){
-              console.log("Refreshing table...");
-              this.refreshTable();
-            }
-          })
+      this.commService.currentMessage.subscribe((message) => {
+        if(message.type === MessageType.Added || message.type === MessageType.Updated || 
+          message.type === MessageType.Deleted || message.type === MessageType.Refresh){
+          console.log("Refreshing table...");
+          this.refreshTable();
+        }
+      })
       
   }
 

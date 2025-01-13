@@ -1,18 +1,14 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 
-
-import {MatDialog} from '@angular/material/dialog';
-import { AddProductComponent } from './masters/product/add-product/add-product.component';
-import { ProductService } from './services/product.service';
 import { Product } from './models/product';
-import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule, MatNavList } from '@angular/material/list';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, RouterOutlet } from '@angular/router';
 
 
@@ -30,36 +26,12 @@ export class AppComponent  {
   products:Product[] = [];
   displayedColumns: string[] = ['name', 'age']
 
-  sideBarOpen = true;
-
-
-
   isSideNavOpen = true;
 
-toggleSideNav() {
-  this.isSideNavOpen = !this.isSideNavOpen;
-}
-
-
-  sideBarToggler() {
-    this.sideBarOpen = !this.sideBarOpen;
+  toggleSideNav() {
+    this.isSideNavOpen = !this.isSideNavOpen;
   }
 
-
-
-
-  constructor(private dialog:MatDialog,private productService:ProductService,private httpClient:HttpClient){
-    //this.showAllProducts();
-  }
-
-
-
-  showAllProducts(){
-    this.productService.getAllProducts().subscribe((products)=> {
-      console.log("Incoming Products",products);
-      this.products = [...products];
-      console.log("Product passed to list",this.products);
-    })
-  }
+  constructor(){}
 
 }

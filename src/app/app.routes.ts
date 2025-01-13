@@ -4,6 +4,10 @@ import { ListProductsComponent } from './masters/product/list-products/list-prod
 import { ProductMainComponent } from './masters/product/product-main/product-main.component';
 import { CategoryMainComponent } from './masters/category/category-main/category-main.component';
 import { MastersComponent } from './masters/masters.component';
+import { CustomerComponent } from './masters/customer/customer.component';
+import { SalesComponent } from './sales/sales.component';
+import { SalesMainComponent } from './sales/sales-main/sales-main.component';
+import { PurchaseComponent } from './purchase/purchase.component';
 
 
 export const routes: Routes = [
@@ -17,9 +21,21 @@ export const routes: Routes = [
         "component": ProductMainComponent
     },
     {
+        "path": "customers",
+        "component": CustomerComponent
+    },    
+    {
         "path": "masters",
         "component": MastersComponent
     },
+    {
+        "path": "sales",
+        "component": SalesMainComponent
+    },
+    {
+        "path": "purchases",
+        "component": PurchaseComponent
+    },        
     {
         "path": "",
         "redirectTo": "masters",

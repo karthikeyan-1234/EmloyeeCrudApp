@@ -28,7 +28,7 @@ import { MessageType } from '../../../enums/message-type.enum';
 export class ListProductsComponent implements OnInit {
 
   @Input() products:Product[] = [];
-  displayedColumns: string[] = ['name', 'category', 'rate', 'actions'];
+  displayedColumns: string[] = ['id','name', 'category', 'actions'];
   dataSource = new MatTableDataSource<Product>(this.products);
   editedId:number = 0;
   categories: ProductCategory[] = [];

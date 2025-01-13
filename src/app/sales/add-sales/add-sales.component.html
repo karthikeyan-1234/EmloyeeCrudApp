@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Add New Sale</h2>
+<div mat-dialog-content>
+    <form [formGroup]="newSaleForm">
+
+      <mat-form-field class="example-form-field">
+        <mat-label>Customer</mat-label>
+          <mat-select formControlName ="customerId" >
+              <mat-option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</mat-option>
+          </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="example-form-field">
+      <mat-label>Sale Date</mat-label>
+      <input formControlName="saleDate" matInput [matDatepicker]="picker">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-action [align]="'end'">
+  <button mat-raised-button cdkFocusInitial (click)="formSubmitted()" mat-dialog-close>Ok</button>
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+</div>      

@@ -5,6 +5,4 @@ export interface Product {
     name: string;
     productTypeId: number;
     category: ProductCategory;
-    rate: number;
-
 }

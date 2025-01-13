@@ -4,6 +4,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { CategoryMainComponent } from './category/category-main/category-main.component';
 import { ProductMainComponent } from './product/product-main/product-main.component';
 import { CommonModule } from '@angular/common';
+import { CustomerMainComponent } from './customer/customer-main/customer-main.component';
 
 @Component({
   selector: 'app-masters',
@@ -21,7 +22,7 @@ export class MastersComponent {
   links = [
     { label: 'Product Category', component: CategoryMainComponent },
     { label: 'Products', component: ProductMainComponent },
-    { label: 'Tab 3', component: CategoryMainComponent }
+    { label: 'Customers', component: CustomerMainComponent }
   ];
 
   activeLink: string = '';

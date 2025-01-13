@@ -1,0 +1,26 @@
+<div class="mat-main-container">
+
+    <div class="mat-left-part mat-table-scroll" [style.width]="drawer.opened ? '80%' : '100%'">
+        <app-list-sales></app-list-sales>
+    </div>
+
+    <div class="mat-right-part" style="margin-top: 10px;">
+        <!-- <button mat-raised-button color="warn" (click)="showFiller = !showFiller">Add Sale</button> -->
+        <button mat-raised-button color="warn" (click)="openAddDialog('1','1')">Add Sale</button>
+    </div>
+
+    <mat-drawer-container class="example-container" scrollable="true">
+      <mat-drawer #drawer mode="side" opened>
+      </mat-drawer>
+      <mat-drawer-content>
+        <ng-container *ngIf="showFiller">
+            <div>
+              <app-add-sales></app-add-sales>
+            </div>
+          </ng-container>
+      </mat-drawer-content>
+    </mat-drawer-container>
+
+</div>
+
+

@@ -17,6 +17,8 @@ import Swal from 'sweetalert2';
 import { CommunicationService } from '../../../services/communication.service';
 import { Product } from '../../../models/product';
 import { MessageType } from '../../../enums/message-type.enum';
+import { CustomerService } from '../../../services/customer.service';
+import { Customer } from '../../../models/customer';
 
 @Component({
   selector: 'app-add-product',
@@ -33,16 +35,22 @@ export class AddProductComponent implements OnInit {
 
   categories: ProductCategory[] = [];
   freshStates: string[] = [];
+  customers: Customer[] = [];
 
   newProductForm!: FormGroup;
 
   constructor(private productService:ProductService,private formBuilder:FormBuilder,
-    private commService:CommunicationService
+    private commService:CommunicationService, private customerService: CustomerService
   ){}
 
   ngOnInit(): void {
     this.productService.getAllCategories().subscribe(res => {
       this.categories = res;
+    })
+
+    this.customerService.getAllCustomers().subscribe(res => {
+      this.customers = res;
+      console.log(this.customers);
     })
 
     this.newProductForm = this.formBuilder.group({
@@ -63,7 +71,7 @@ export class AddProductComponent implements OnInit {
       id: 0,
       name: this.newProductForm.value.name,
       productTypeId: productCategory.id,
-      rate: this.newProductForm.value.rate,
+      //rate: this.newProductForm.value.rate,
       category: productCategory
     }
 
