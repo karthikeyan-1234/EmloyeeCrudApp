@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, EventEmitter, Output, output } from '@angular/core';
 import { SaleService } from '../../services/sale.service';
 import { SaleInfo } from '../../models/sale-info';
 import { CommunicationService } from '../../services/communication.service';
@@ -13,6 +13,7 @@ import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core'; 
+import { MatSidenavModule } from '@angular/material/sidenav'; 
 
 import { HttpClientModule } from '@angular/common/http';
 import { Customer } from '../../models/customer';
@@ -24,8 +25,8 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-list-sales',
   standalone: true,
-  imports: [CommonModule, MatTableModule,MatFormFieldModule,FormsModule,MatSelectModule,
-      MatIconModule,MatButtonModule, MatInputModule,HttpClientModule,MatDatepickerModule,MatNativeDateModule],
+  imports: [CommonModule, MatTableModule, MatFormFieldModule, FormsModule, MatSelectModule,MatSidenavModule,
+    MatIconModule, MatButtonModule, MatInputModule, HttpClientModule, MatDatepickerModule, MatNativeDateModule],
   templateUrl: './list-sales.component.html',
   styleUrl: './list-sales.component.css'
 })
@@ -36,6 +37,8 @@ export class ListSalesComponent {
   dataSource: MatTableDataSource<SaleInfo>;
   editedId: number = 0;
   displayedColumns = ['id', 'customerName', 'saleDate', 'actions'];
+  open: boolean = true;
+  @Output() saleSelected = new EventEmitter<any>();
 
   constructor(private saleService: SaleService,private customerService: CustomerService, private commService: CommunicationService){
 
@@ -99,5 +102,10 @@ export class ListSalesComponent {
   
   editSale(sale: SaleInfo) {
     this.editedId = sale.id;
+  }
+
+  showSaleItems(sale: SaleInfo){
+    console.log("Showing sale info for ");console.log(sale);
+    this.saleSelected.emit(sale);
   }
 }

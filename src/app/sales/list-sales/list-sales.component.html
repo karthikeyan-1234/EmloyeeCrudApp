@@ -40,23 +40,26 @@
 
         <!--Actions-->
         <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <th mat-header-cell *matHeaderCellDef>
+                <div class="header-actions">
+                    <span>Actions</span>
+                    <button class="button-with-margin" mat-raised-button style="color: whitesmoke; background-color: blueviolet;">Add Sale</button>
+                </div>
+            </th>
             <td mat-cell *matCellDef="let element">
                 <span *ngIf="element.id != editedId; else display">
                     <button class="button-with-margin" mat-raised-button color="primary" (click)="editSale(element)">Edit</button>
                     <button class="button-with-margin" mat-raised-button color="warn" (click)="deleteSale(element)">Delete</button>
-                    <button class="button-with-margin" mat-raised-button color="accent" (click)="deleteSale(element)">Items</button>
+                    <button class="button-with-margin" mat-raised-button color="accent" (click)="showSaleItems(element)">Items</button>
                 </span>
                 <ng-template #display>
                     <button class="button-with-margin" mat-raised-button color="primary" (click)="updateSale(element)">Save</button>
                     <button class="button-with-margin" mat-raised-button color="warn" (click)="cancelEdit()">Cancel</button>
                 </ng-template>
-        </td>
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-
-
 </div>

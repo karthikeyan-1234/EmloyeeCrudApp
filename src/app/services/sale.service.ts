@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 import { Sale } from '../models/sale';
-import { SaleDetail } from '../models/sale-detail';
 import { SaleDetailInfo } from '../models/sale-detail-info';
 import { Product } from '../models/product';
 import { ProductCategory } from '../models/product-category';
@@ -15,6 +14,18 @@ import { SaleInfo } from '../models/sale-info';
   providedIn: 'root'
 })
 export class SaleService {
+
+
+  saleInfo: SaleDetailInfo[] = [
+    {
+      id:1,
+      saleId: 1,
+      productId: 1,
+      price: 1,
+      quantity: 1,
+      productName: "string"
+    }
+  ]
 
   constructor(private http: HttpClient) { }
 
@@ -31,5 +42,21 @@ export class SaleService {
   updateSale(sale: Sale):Observable<Sale>{
     const apiUrl = `${environment.salesUrl}/UpdateSaleAsync`;
     return this.http.put<Sale>(apiUrl, sale);
+  }
+
+  getSaleDetailInfoItems(sale: SaleInfo):Observable<SaleDetailInfo[]>{
+    const apiUrl = `${environment.bffUrl}/SaleReport/GetSaleReport/${sale.id}`;
+    return this.http.get<SaleDetailInfo[]>(apiUrl);
+  }
+
+  addNewSaleDetailInfo(newSaleDetailInfo: SaleDetailInfo):Observable<SaleDetailInfo>
+  {
+    const apiUrl = `${environment.salesUrl}/AddSaleAsync`
+    return this.http.post<SaleDetailInfo>(apiUrl,newSaleDetailInfo)
+  }
+
+  updateSaleDetailInfo(newSaleDetailInfo: SaleDetailInfo):Observable<SaleDetailInfo>{
+    const apiUrl = `${environment.salesUrl}/UpdateSaleAsync`;
+    return this.http.put<SaleDetailInfo>(apiUrl, newSaleDetailInfo);
   }
 }

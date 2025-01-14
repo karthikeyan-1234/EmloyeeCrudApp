@@ -38,7 +38,7 @@ mat-toolbar {
 }
 
 .mat-left-part {
-  flex: 90%; 
+  flex: 60%; 
 }
 
 .mat-middle-part{
@@ -46,7 +46,7 @@ mat-toolbar {
 }
 
 .mat-right-part {
-  flex: 9%; 
+  flex: 39%; 
 }
 
 .mat-table-scroll {

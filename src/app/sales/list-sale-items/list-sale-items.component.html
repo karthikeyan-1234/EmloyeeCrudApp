@@ -1,0 +1,84 @@
+<div class="mat-table-container">
+    <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="productName">
+            <th mat-header-cell *matHeaderCellDef> Product </th>
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="editedId !== element.id;else editThis">{{element.productName}}</span>
+                <ng-template #editThis>
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="element.productId" >
+                            <mat-option *ngFor="let product of products" [value]="product.id">
+                                {{ product.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </ng-template>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef> Price </th>
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="editedId !== element.id;else editThis">{{element.price}}</span>
+                <ng-template #editThis>
+                    <mat-form-field>
+                        <mat-label>Price</mat-label>
+                        <input matInput [(ngModel)]="element.price" />
+                    </mat-form-field>
+                </ng-template>
+            </td>
+        </ng-container>        
+
+        <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef> Quantity</th>
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="editedId !== element.id;else editThis">{{element.quantity}}</span>
+                <ng-template #editThis>
+                    <mat-form-field>
+                        <mat-label>Quantity</mat-label>
+                        <input matInput [(ngModel)]="element.quantity" />
+                    </mat-form-field>
+                </ng-template>
+            </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef> Amount</th>
+            <td mat-cell *matCellDef="let element">
+                <span>{{element.quantity * element.price}}</span>
+            </td>
+        </ng-container>          
+
+        <!--Actions-->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>
+                <div class="header-actions">
+                    <span>Actions</span>
+                </div>
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.id != editedId; else display">
+                    <button class="button-with-margin" mat-raised-button color="primary" (click)="editSaleInfo(element)">Edit</button>
+                    <button class="button-with-margin" mat-raised-button color="warn" (click)="deleteSaleInfo(element)">Delete</button>
+                </span>
+                <ng-template #display>
+                    <button class="button-with-margin" mat-raised-button color="primary" (click)="updateSaleInfo(element)">Save</button>
+                    <button class="button-with-margin" mat-raised-button color="warn" (click)="cancelEdit()">Cancel</button>
+                </ng-template>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  <!-- Cancel Button -->
+  <div class="cancel-button-container">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="cancel()">Cancel</button>
+  </div>
+</div>
