@@ -1,15 +1,13 @@
 <div class="mat-main-container" style="margin-top: 10px">
-  <mat-drawer-container class="example-container" style="width: 2800px;">
+  <mat-drawer-container class="example-container" style="width: 2800px;" [hasBackdrop]="true">
     
     <mat-drawer-content style="flex-grow: 1; min-width: 80%;">
         <app-list-sales (saleSelected)="handleSaleSelected($event)"></app-list-sales>
     </mat-drawer-content>
 
-    <mat-drawer mode="side" opened="{{ isSideNavOpen }}" position="end">
+    <mat-drawer mode="side" opened="{{ isSideNavOpen }}" position="end" [disableClose]="true">
       <app-list-sale-items [sale]="selectedSale" (entryCancelled)="cancel()"></app-list-sale-items>
     </mat-drawer>
 
   </mat-drawer-container>
 </div>
-
-
