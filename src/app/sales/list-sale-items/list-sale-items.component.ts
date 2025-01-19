@@ -23,6 +23,8 @@ import Swal from 'sweetalert2';
 import { SaleDetailInfo } from '../../models/sale-detail-info';
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-list-sale-items',
@@ -41,9 +43,18 @@ export class ListSaleItemsComponent {
   displayedColumns = ['id', 'productName', 'quantity', 'price', 'amount', 'actions'];
   open: boolean = true;
   @Output() entryCancelled = new EventEmitter<any>();
+  
+  newProduct: any;
+  newPrice: any;
+  newQuantity: any;
 
-  constructor(private saleService: SaleService,private productService:ProductService){
-    console.log(this.sale);
+  isAdding = true; // Track if a new row is being added
+  newRow = { productId: null, price: 0.00, quantity: null }; // Temporary storage for new row data
+  @Output() isAddingChanged = new EventEmitter<boolean>();
+  showInputRow = true;
+
+
+  constructor(private saleService: SaleService,private productService:ProductService,private cdRef: ChangeDetectorRef){
   }
 
   ngOnChanges(): void {
@@ -56,7 +67,34 @@ export class ListSaleItemsComponent {
       },(err)=>{
 
       })
+
+      this.isAdding = true;
+      this.isAddingChanged.emit(this.isAdding); 
     }
+  }
+
+  addNewRow() {
+    console.log("Adding new row...");
+    this.isAdding = true;
+    this.showInputRow = true;
+    this.isAddingChanged.emit(this.isAdding); 
+    this.newRow = { productId: null, price: 0.00, quantity: null }; // Reset new row
+    console.log("New row to be displayed..!!");
+    this.cdRef.detectChanges();
+  }
+
+  saveNewRow() {
+    if (this.newRow.productId && this.newRow.price && this.newRow.quantity) {
+      // Add new row to data source
+      //this.isAdding = false;
+    } else {
+      alert('Please fill all fields');
+    }
+  }
+
+  cancelAdd() {
+    //this.isAdding = false;
+    this.newRow = { productId: null, price: 0.00, quantity: null };
   }
 
   loadSaleItems(sale: SaleInfo): void {
@@ -91,8 +129,15 @@ export class ListSaleItemsComponent {
     this.editedId = sale.id;
   }
 
+  addSaleInfo()
+  {
+    Swal.fire("Add new sale item");
+  }
+
   cancel(){
     this.entryCancelled.emit();
   }
+
+  addNewItem(){}
 
 }

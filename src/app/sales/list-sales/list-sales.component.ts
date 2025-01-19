@@ -20,6 +20,8 @@ import { Customer } from '../../models/customer';
 import { CustomerService } from '../../services/customer.service';
 import { Sale } from '../../models/sale';
 import Swal from 'sweetalert2';
+import { AddSalesComponent } from '../add-sales/add-sales.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -40,7 +42,8 @@ export class ListSalesComponent {
   open: boolean = true;
   @Output() saleSelected = new EventEmitter<any>();
 
-  constructor(private saleService: SaleService,private customerService: CustomerService, private commService: CommunicationService){
+  constructor(private saleService: SaleService,private customerService: CustomerService, 
+    private commService: CommunicationService, private dialog:MatDialog){
 
     this.customerService.getAllCustomers().subscribe((customers)=> {
       this.customers = customers;
@@ -97,7 +100,13 @@ export class ListSalesComponent {
   }
   
   deleteSale(sale: SaleInfo) {
-   throw new Error('Method not implemented.');
+   this.saleService.deleteSale(sale).subscribe(res => {
+    Swal.fire("Sale Deleted..!!").then((res)=>{
+      this.refreshTable();
+    },(err) =>{
+      Swal.fire("Unable to delete..!!","","error");
+    })
+   })
   }
   
   editSale(sale: SaleInfo) {
@@ -108,4 +117,15 @@ export class ListSalesComponent {
     console.log("Showing sale info for ");console.log(sale);
     this.saleSelected.emit(sale);
   }
+
+openAddDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+      this.dialog.open(AddSalesComponent, {
+        width: '450px',
+        height: '400px',
+        enterAnimationDuration,
+        exitAnimationDuration,
+      }).afterClosed().subscribe(() => {
+        console.log('The dialog was closed');
+      });
+    }  
 }

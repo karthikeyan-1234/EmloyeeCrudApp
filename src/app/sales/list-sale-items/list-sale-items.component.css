@@ -1,5 +1,4 @@
-.cancel-button-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 16px; /* Add spacing between the table and button */
-  }
+.add-row td {
+  padding: 8px;
+}
+

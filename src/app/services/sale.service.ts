@@ -44,6 +44,13 @@ export class SaleService {
     return this.http.put<Sale>(apiUrl, sale);
   }
 
+  deleteSale(sale: Sale):Observable<any>{
+    const apiUrl = `${environment.salesUrl}/DeleteSaleByIdAsync/${sale.id}`;
+    console.log("Trying to call...delete endpoint");
+    console.log(apiUrl);
+    return this.http.delete(apiUrl);
+  }
+
   getSaleDetailInfoItems(sale: SaleInfo):Observable<SaleDetailInfo[]>{
     const apiUrl = `${environment.bffUrl}/SaleReport/GetSaleReport/${sale.id}`;
     return this.http.get<SaleDetailInfo[]>(apiUrl);
@@ -51,12 +58,12 @@ export class SaleService {
 
   addNewSaleDetailInfo(newSaleDetailInfo: SaleDetailInfo):Observable<SaleDetailInfo>
   {
-    const apiUrl = `${environment.salesUrl}/AddSaleAsync`
+    const apiUrl = `${environment.salesUrl}/AddSaleDetailsAsync`
     return this.http.post<SaleDetailInfo>(apiUrl,newSaleDetailInfo)
   }
 
   updateSaleDetailInfo(newSaleDetailInfo: SaleDetailInfo):Observable<SaleDetailInfo>{
-    const apiUrl = `${environment.salesUrl}/UpdateSaleAsync`;
+    const apiUrl = `${environment.salesUrl}/UpdateSaleDetailAsync`;
     return this.http.put<SaleDetailInfo>(apiUrl, newSaleDetailInfo);
   }
 }

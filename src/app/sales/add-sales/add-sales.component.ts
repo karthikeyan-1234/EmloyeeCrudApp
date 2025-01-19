@@ -34,7 +34,7 @@ import { SaleService } from '../../services/sale.service';
 })
 export class AddSalesComponent {
   categories: ProductCategory[] = [];
-
+  today = new Date();
   newSaleForm!: FormGroup;
   customerId: any;
   customers: Customer[] = [];
