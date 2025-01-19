@@ -6,7 +6,7 @@
     </mat-drawer-content>
 
     <mat-drawer mode="side" opened="{{ isSideNavOpen }}" position="end" [disableClose]="true">
-      <app-list-sale-items [sale]="selectedSale" (entryCancelled)="cancel()"></app-list-sale-items>
+      <app-list-sale-items [sale]="selectedSale" (entryCancelled)="cancel()" (closed)="cancel()"></app-list-sale-items>
     </mat-drawer>
 
   </mat-drawer-container>

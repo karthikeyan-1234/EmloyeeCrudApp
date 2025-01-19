@@ -23,6 +23,7 @@ import Swal from 'sweetalert2';
 import { SaleDetailInfo } from '../../models/sale-detail-info';
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
+import { MatDialogRef } from '@angular/material/dialog';  // Import MatDialogRef
 import { ChangeDetectorRef } from '@angular/core';
 
 
@@ -42,19 +43,21 @@ export class ListSaleItemsComponent {
   editedId: number = 0;
   displayedColumns = ['id', 'productName', 'quantity', 'price', 'amount', 'actions'];
   open: boolean = true;
-  @Output() entryCancelled = new EventEmitter<any>();
+  @Output() closed = new EventEmitter<void>();
   
-  newProduct: any;
-  newPrice: any;
-  newQuantity: any;
 
-  isAdding = true; // Track if a new row is being added
-  newRow = { productId: null, price: 0.00, quantity: null }; // Temporary storage for new row data
-  @Output() isAddingChanged = new EventEmitter<boolean>();
-  showInputRow = true;
+  isAddingNewEntry = true;
+  newEntry: SaleDetailInfo = {
+      id: 0,
+      saleId: 0,
+      productId: 0,
+      productName: '',
+      quantity: 0,
+      price: 0,
+  };
 
-
-  constructor(private saleService: SaleService,private productService:ProductService,private cdRef: ChangeDetectorRef){
+  constructor(private saleService: SaleService,private productService:ProductService,private cdr: ChangeDetectorRef
+  ){
   }
 
   ngOnChanges(): void {
@@ -68,34 +71,10 @@ export class ListSaleItemsComponent {
 
       })
 
-      this.isAdding = true;
-      this.isAddingChanged.emit(this.isAdding); 
     }
   }
 
-  addNewRow() {
-    console.log("Adding new row...");
-    this.isAdding = true;
-    this.showInputRow = true;
-    this.isAddingChanged.emit(this.isAdding); 
-    this.newRow = { productId: null, price: 0.00, quantity: null }; // Reset new row
-    console.log("New row to be displayed..!!");
-    this.cdRef.detectChanges();
-  }
-
-  saveNewRow() {
-    if (this.newRow.productId && this.newRow.price && this.newRow.quantity) {
-      // Add new row to data source
-      //this.isAdding = false;
-    } else {
-      alert('Please fill all fields');
-    }
-  }
-
-  cancelAdd() {
-    //this.isAdding = false;
-    this.newRow = { productId: null, price: 0.00, quantity: null };
-  }
+  
 
   loadSaleItems(sale: SaleInfo): void {
     this.saleService.getSaleDetailInfoItems(sale!).subscribe((saleDetails) => {
@@ -110,6 +89,16 @@ export class ListSaleItemsComponent {
 
   cancelEdit() {
       this.editedId = -1;
+
+      if(this.isAddingNewEntry)
+      {
+        this.isAddingNewEntry = false;
+        console.log(this.dataSource.data);
+        const data = this.dataSource.data.filter(entry => entry.id != 0); // Remove new entry from data array
+        console.log(data);
+        this.dataSource.data = data; // Update dataSource
+      }
+
   }
   updateSaleInfo(saleInfo: SaleDetailInfo) {
     this.saleService.updateSaleDetailInfo(saleInfo).subscribe((res)=>{
@@ -131,13 +120,23 @@ export class ListSaleItemsComponent {
 
   addSaleInfo()
   {
-    Swal.fire("Add new sale item");
+    this.isAddingNewEntry = true;
+    const data = this.dataSource.data;
+    data.unshift(this.newEntry); // Add new entry to data array
+    this.editedId = 0;
+    this.dataSource.data = data; // Update dataSource
+    this.cdr.detectChanges();
   }
 
   cancel(){
-    this.entryCancelled.emit();
+    this.isAddingNewEntry = false;
+    console.log("Cancelling new entry..");
+    console.log(this.newEntry);
+    const data = this.dataSource.data.filter(entry => entry.id == 0); // Remove new entry from data array
+    this.dataSource.data = data; // Update dataSource
+    this.closed.emit();
+    this.cdr.detectChanges();
   }
 
-  addNewItem(){}
 
 }
