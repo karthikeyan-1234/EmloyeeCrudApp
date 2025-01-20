@@ -47,10 +47,6 @@ mat-toolbar {
   overflow: auto; /* Enable scrolling */
 }
 
-.mat-mdc-header-cell {
-  background-color: rgb(125, 121, 121);
-  color: rgb(50, 3, 3); /* Optional: Set text color for better contrast */
-}
 
 .icon-container {
   vertical-align: middle;
@@ -67,9 +63,19 @@ mat-toolbar {
   max-width: 100%; /* Ensure it doesn't exceed the cell width */
 }
 
+/*Highlight header cells of mat tables*/
+.mat-header-cell {
+  background-color: #6f2d2d; /* Light gray background color */
+}
+
 .mat-table-scroll {
   overflow: auto; /* Enable vertical scrolling */
   height: 400px; /* Adjust the height as needed */
+}
+
+.mat-mdc-header-cell {
+  background-color: #ced3ee !important; /* Light gray background color */
+  border: #4caf50 !important; /* Add a border to the header cell */
 }
 
 

@@ -5,7 +5,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 
-import { Product } from './models/product';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule, MatNavList } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
@@ -23,8 +22,6 @@ import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/rou
 })
 export class AppComponent  {
   title = 'EmloyeeCrudApp';
-  products:Product[] = [];
-  displayedColumns: string[] = ['name', 'age']
 
   isSideNavOpen = true;
 
