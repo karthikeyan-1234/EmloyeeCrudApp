@@ -64,6 +64,7 @@ export class ListSaleItemsComponent {
     if (this.sale) {
       // Fetch the sale items for the selected sale
       console.log('Selected Sale:', this.sale);
+      this.newEntry.saleId = this.sale.id;
       this.loadSaleItems(this.sale);
       this.productService.getAllProducts().subscribe((res)=>{
           this.products = res;
@@ -74,6 +75,16 @@ export class ListSaleItemsComponent {
     }
   }
 
+  resetNewEntry() {
+    this.newEntry = {
+      id: 0,
+      saleId: this.sale.id,
+      productId: 0,
+      productName: '',
+      quantity: 0,
+      price: 0,
+    };
+  }
   
 
   loadSaleItems(sale: SaleInfo): void {
@@ -102,8 +113,12 @@ export class ListSaleItemsComponent {
   }
   updateSaleInfo(saleInfo: SaleDetailInfo) {
     this.saleService.updateSaleDetailInfo(saleInfo).subscribe((res)=>{
-       Swal.fire({icon: 'success',text: 'Sale updated..!!'});
+      if(saleInfo.id == 0)  
+          Swal.fire({icon: 'success',text: 'Sale added..!!'});
+      else
+          Swal.fire({icon: 'success',text: 'Sale updated..!!'});
         this.editedId = -1;
+        this.resetNewEntry();
         this.loadSaleItems(this.sale);
       },(err) => {
         Swal.fire({icon: 'warning',text: err.message})
@@ -111,14 +126,31 @@ export class ListSaleItemsComponent {
   }
     
   deleteSaleInfo(sale: SaleDetailInfo) {
-     throw new Error('Method not implemented.');
+    Swal.fire({
+      title: 'Are you sure?',text: "You want to delete this sale?",icon: 'warning',showCancelButton: true,
+      confirmButtonColor: '#3085d6',cancelButtonColor: '#d33',confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed)
+        this.deleteSaleInfoConfirmed(sale);
+    })
+  }
+
+  deleteSaleInfoConfirmed(sale: SaleDetailInfo) {
+    this.saleService.deleteSaleDetailInfo(sale).subscribe(res => {
+      Swal.fire("Sale Deleted..!!").then((res)=>{
+        this.loadSaleItems(this.sale);
+      },(err) =>{
+        Swal.fire("Unable to delete..!!","","error");
+      })
+     })
   }
     
   editSaleInfo(sale: SaleDetailInfo) {
+    this.cancelEdit();
     this.editedId = sale.id;
   }
 
-  addSaleInfo()
+  addSaleEmptyEntry()
   {
     this.isAddingNewEntry = true;
     const data = this.dataSource.data;

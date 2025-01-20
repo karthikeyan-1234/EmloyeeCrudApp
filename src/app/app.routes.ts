@@ -8,6 +8,7 @@ import { CustomerComponent } from './masters/customer/customer.component';
 import { SalesComponent } from './sales/sales.component';
 import { SalesMainComponent } from './sales/sales-main/sales-main.component';
 import { PurchaseComponent } from './purchase/purchase.component';
+import { PurchaseMainComponent } from './purchase/purchase-main/purchase-main.component';
 
 
 export const routes: Routes = [
@@ -34,7 +35,7 @@ export const routes: Routes = [
     },
     {
         "path": "purchases",
-        "component": PurchaseComponent
+        "component": PurchaseMainComponent
     },        
     {
         "path": "",

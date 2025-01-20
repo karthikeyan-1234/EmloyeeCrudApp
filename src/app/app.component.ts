@@ -9,7 +9,7 @@ import { Product } from './models/product';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule, MatNavList } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/router';
 
 
 @Component({
@@ -32,6 +32,14 @@ export class AppComponent  {
     this.isSideNavOpen = !this.isSideNavOpen;
   }
 
-  constructor(){}
+  selectedMenuItem: string = ''; // Track the currently selected menu item
 
+  selectMenuItem(menuItem: string) {
+    this.selectedMenuItem = menuItem;
+  }
+  constructor(private router: Router, private route: ActivatedRoute){}
+
+  isActive(path: string): boolean {
+    return this.router.url === path;
+  }
 }

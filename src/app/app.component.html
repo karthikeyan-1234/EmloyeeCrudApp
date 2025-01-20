@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <button mat-icon-button class="example-icon" 
-  aria-label="Example icon-button with menu icon" (click)="toggleSideNav()">
+          aria-label="Example icon-button with menu icon" (click)="toggleSideNav()">
     <mat-icon>{{ isSideNavOpen ? "keyboard_backspace" : "dehaze" }}</mat-icon>
   </button>
   <span>My App</span>
@@ -10,16 +10,25 @@
 <mat-drawer-container class="example-container">
   <mat-drawer mode="side" opened="{{ isSideNavOpen }}">
     <mat-nav-list>
-      <a mat-list-item routerLink="/masters">Masters</a>
+      <a mat-list-item routerLink="/masters" 
+         [ngClass]="{'active': isActive('/masters')}">Masters</a>
     </mat-nav-list>
     <mat-nav-list>
-      <a mat-list-item routerLink="/sales">Sales</a>
+      <a mat-list-item routerLink="/sales" 
+         [ngClass]="{'active': isActive('/sales')}">Sales</a>
     </mat-nav-list>
     <mat-nav-list>
-      <a mat-list-item routerLink="/purchases">Purchases</a>
+      <a mat-list-item routerLink="/purchases" 
+         [ngClass]="{'active': isActive('/purchases')}">Purchases</a>
     </mat-nav-list>
   </mat-drawer>
   <mat-drawer-content>
     <router-outlet></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>
+
+<style>
+  .active {
+    background-color: #f0f0f0; /* Or your desired highlight color */
+  }
+</style>

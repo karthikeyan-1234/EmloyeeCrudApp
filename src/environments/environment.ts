@@ -4,6 +4,6 @@ export const environment = {
     purchaseUrl: '',
     salesUrl: 'https://localhost:7029/api/Sales',
     inventoryUrl: '',
-    bffUrl: 'https://localhost:7221/api'
+    bffUrl: 'https://localhost:7221/api/Report'
     // Other environment-specific variables
   };

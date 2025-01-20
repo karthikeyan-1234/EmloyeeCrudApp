@@ -30,7 +30,7 @@ export class SaleService {
   constructor(private http: HttpClient) { }
 
   getAllSalesInfo():Observable<SaleInfo[]>{
-    const apiUrl = `${environment.bffUrl}/SaleReport/GetAllSales`;
+    const apiUrl = `${environment.bffUrl}/GetAllSales`;
     return this.http.get<SaleInfo[]>(apiUrl);
   }
 
@@ -52,7 +52,7 @@ export class SaleService {
   }
 
   getSaleDetailInfoItems(sale: SaleInfo):Observable<SaleDetailInfo[]>{
-    const apiUrl = `${environment.bffUrl}/SaleReport/GetSaleReport/${sale.id}`;
+    const apiUrl = `${environment.bffUrl}/GetSaleReport/${sale.id}`;
     return this.http.get<SaleDetailInfo[]>(apiUrl);
   }
 
@@ -65,5 +65,10 @@ export class SaleService {
   updateSaleDetailInfo(newSaleDetailInfo: SaleDetailInfo):Observable<SaleDetailInfo>{
     const apiUrl = `${environment.salesUrl}/UpdateSaleDetailAsync`;
     return this.http.put<SaleDetailInfo>(apiUrl, newSaleDetailInfo);
+  }
+
+  deleteSaleDetailInfo(saleDetailInfo: SaleDetailInfo):Observable<any>{
+    const apiUrl = `${environment.salesUrl}/DeleteSaleDetailAsync?saleDetailId=${saleDetailInfo.id}`;
+    return this.http.delete(apiUrl);
   }
 }

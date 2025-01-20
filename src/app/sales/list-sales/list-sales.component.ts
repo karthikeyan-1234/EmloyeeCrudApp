@@ -100,14 +100,33 @@ export class ListSalesComponent {
   }
   
   deleteSale(sale: SaleInfo) {
-   this.saleService.deleteSale(sale).subscribe(res => {
-    Swal.fire("Sale Deleted..!!").then((res)=>{
-      this.refreshTable();
-    },(err) =>{
-      Swal.fire("Unable to delete..!!","","error");
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to delete this sale?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteSaleConfirmed(sale);
+      }
     })
-   })
+
   }
+
+
+  deleteSaleConfirmed(sale: SaleInfo) {
+    this.saleService.deleteSale(sale).subscribe(res => {
+      Swal.fire("Sale Deleted..!!").then((res)=>{
+        this.refreshTable();
+      },(err) =>{
+        Swal.fire("Unable to delete..!!","","error");
+      })
+     })
+    }
   
   editSale(sale: SaleInfo) {
     this.editedId = sale.id;
