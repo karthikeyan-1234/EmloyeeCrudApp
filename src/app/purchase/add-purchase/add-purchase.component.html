@@ -1,16 +1,16 @@
 <h2 mat-dialog-title>Add New Purchase</h2>
 <div mat-dialog-content>
-    <form [formGroup]="newProductForm">
+    <form [formGroup]="newPurchaseForm">
       <mat-form-field appearance="outline">
-        <mat-label>Customer</mat-label>
-          <mat-select formControlName ="customerId" >
+        <mat-label>Vendor</mat-label>
+          <mat-select formControlName ="vendorId" >
               <mat-option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</mat-option>
           </mat-select>
       </mat-form-field>
 
     <mat-form-field appearance="outline" [ngStyle]="{'padding-bottom': '20px'}">
-      <mat-label>Sale Date</mat-label>
-      <input formControlName="saleDate" matInput [matDatepicker]="picker" [value]="today">
+      <mat-label>Purchase Date</mat-label>
+      <input formControlName="purchaseDate" matInput [matDatepicker]="picker" [value]="today">
       <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>

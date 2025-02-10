@@ -1,5 +1,5 @@
 export interface Purchase {
     id: number,
-    customerId: number,
+    vendorId: number,
     purchaseDate: Date
 }

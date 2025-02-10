@@ -36,22 +36,27 @@ import { PurchaseService } from '../../services/purchase.service';
 export class AddPurchaseComponent {
   categories: ProductCategory[] = [];
   today = new Date();
-  newProductForm!: FormGroup;
+  newPurchaseForm!: FormGroup;
   customerId: any;
   customers: Customer[] = [];
   newPurchase: Purchase = {
     id: 0,
-    customerId: 0,
+    vendorId: 0,
     purchaseDate: new Date()
   }
 
   constructor(private purchaseService:PurchaseService,private formBuilder:FormBuilder,
     private commService:CommunicationService,private customerService: CustomerService
-  ){}
+  ){
+    this.newPurchaseForm = this.formBuilder.group({
+      vendorId: ['', Validators.required],
+      saleDate: ['',Validators.required],
+    })
+  }
 
   formSubmitted(){
-      this.newPurchase.customerId = this.newProductForm.value.customerId;
-      this.newPurchase.purchaseDate = this.newProductForm.value.saleDate;
+      this.newPurchase.vendorId = this.newPurchaseForm.value.vendorId;
+      this.newPurchase.purchaseDate = this.newPurchaseForm.value.saleDate;
   
       this.purchaseService.addNewPurchase(this.newPurchase).subscribe((res) => {
         Swal.fire({icon: 'success',text:'Purchase Added Successfully'});

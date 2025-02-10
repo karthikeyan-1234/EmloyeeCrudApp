@@ -40,4 +40,24 @@ export class PurchaseService {
     const apiUrl = `${environment.bffUrl}/GetPurchaseReport/${purchase.id}`;
     return this.http.get<PurchaseDetailInfo[]>(apiUrl);
   }
+
+  addPurchaseDetailInfoItem(newItem: PurchaseDetailInfo):Observable<PurchaseDetailInfo>{
+    const apiUrl = `${environment.purchaseUrl}/AddPurchaseDetailInfoAsync`;
+    return this.http.post<PurchaseDetailInfo>(apiUrl,newItem);
+  }
+
+  updatePurchaseDetailInfoItem(item: PurchaseDetailInfo):Observable<PurchaseDetailInfo>{
+    const apiUrl = `${environment.purchaseUrl}/UpdatePurchaseDetailAsync`;
+    return this.http.put<PurchaseDetailInfo>(apiUrl, item);
+  }
+
+  deletePurchaseDetailInfoItem(item: PurchaseDetailInfo):Observable<any>{
+    const apiUrl = `${environment.purchaseUrl}/DeletePurchaseDetailInfoByIdAsync/${item.id}`;
+    return this.http.delete(apiUrl);
+  }
+
+  getPurchaseById(id: number):Observable<Purchase>{
+    const apiUrl = `${environment.purchaseUrl}/GetPurchaseById/${id}`;
+    return this.http.get<Purchase>(apiUrl);
+  }
 }

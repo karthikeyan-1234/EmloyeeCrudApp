@@ -164,8 +164,12 @@ export class ListSaleItemsComponent {
     this.isAddingNewEntry = false;
     console.log("Cancelling new entry..");
     console.log(this.newEntry);
-    const data = this.dataSource.data.filter(entry => entry.id == 0); // Remove new entry from data array
-    this.dataSource.data = data; // Update dataSource
+    //Check if dataSource is not null and remove new entry from it
+    if(this.dataSource)
+    {
+      const data = this.dataSource.data.filter(entry => entry.id != 0); // Remove new entry from data array
+      this.dataSource.data = data; // Update dataSource
+    }
     this.closed.emit();
     this.cdr.detectChanges();
   }
