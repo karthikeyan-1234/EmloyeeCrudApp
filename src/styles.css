@@ -4,8 +4,30 @@ body{
 }
 
 .example-spacer {
-  flex: 1 1 auto;
+  flex-grow: 1;
 }
+
+.username-container {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  padding: 0 12px;
+  max-width: 250px; /* Adjust width as needed */
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.username-text {
+  flex-grow: 1;
+  min-width: 50px;
+  max-width: 100%; /* Allow full width */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
   
 mat-toolbar {
   position: sticky; /* This is the key to freeze the toolbar */

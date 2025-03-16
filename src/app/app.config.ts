@@ -1,19 +1,39 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, APP_INITIALIZER } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
 
 
 import { routes } from './app.routes';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS,provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
+import { initializeKeycloak } from "./init/keycloak-init.factory";
+import { KeycloakBearerInterceptor, KeycloakService } from 'keycloak-angular';
+
 export const appConfig: ApplicationConfig = {
-  providers: [provideAnimations(),provideNativeDateAdapter(),provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes),
-    provideHttpClient(withInterceptorsFromDi()),
+  providers: [
+    provideAnimationsAsync(),
+    provideNativeDateAdapter(),
+    provideRouter(routes),
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: {appearance: 'fill', subscriptSizing: 'dynamic'}
-    }
+    },
+    KeycloakService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService],
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: KeycloakBearerInterceptor,
+      multi: true,
+    },
+    provideHttpClient(
+      withInterceptorsFromDi() // tell httpClient to use interceptors from DI
+    ),
   ]
 };

@@ -4,7 +4,11 @@
     <mat-icon>{{ isSideNavOpen ? "keyboard_backspace" : "dehaze" }}</mat-icon>
   </button>
   <span>My App</span>
-  <span class="example-spacer"></span>
+  <div class="example-spacer"></div>
+  <button class="username-container" (click)="logOut()">
+    <span class="username-text">{{ getUserName() }}</span>
+    <mat-icon>exit_to_app</mat-icon>
+  </button>
 </mat-toolbar>
 
 <mat-drawer-container class="example-container">
