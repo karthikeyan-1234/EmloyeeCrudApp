@@ -2,26 +2,62 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.6.
 
-## Development server
+# Demonstrates how to implement RBAC (OIDC) using KeyCloak in Angular 18, with the following functionalities:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+* Login redirect to KeyCloak login page
 
-## Code scaffolding
+* LogOut
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* RBAC Authorization
 
-## Build
+# The preRequisites are:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+* Angular: 18
 
-## Running unit tests
+* KeyCloak: 26.1.4 (npm install keycloak-angular@16  keycloak-js@26)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Docker Image for KeyCloak: quay.io/keycloak/keycloak:latest
 
-## Running end-to-end tests
+For angular 18 - Keycloak use the below. Refer Versions table of https://www.npmjs.com/package/keycloak-angular#installation
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+npm install keycloak-angular@16  keycloak-js@26
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+Make sure to install both keycloak-angular and keycloak-js
+
+# Reference GitHUB Repo
+https://github.com/dnyaneshwargiri/keycloak-angular-integration/tree/main/frontend/dny-netflix
+
+# Common Issues And Resolution
+
+To resolve the error Refused to frame 'http://localhost:8080/' because an ancestor violates the following Content Security Policy directive: "frame-ancestors 'self'"
+
+Steps to Fix - CSP (Content Security Policy) error
+==================================================
+Login to Keycloak Admin Console
+
+Go to http://localhost:8080
+Login as admin.
+Navigate to Realm Settings
+
+Select your realm (e.g., myrealm).
+Click on Realm Settings.
+Modify Content Security Policy Headers
+
+Go to the Security Defenses tab.
+
+Under Headers, find the Content Security Policy setting.
+
+Update frame-ancestors to allow your Angular application’s origin.
+
+For example, if your Angular app is running on http://localhost:4200, set:
+
+frame-ancestors 'self' http://localhost:4200;
+
+Save the changes.
+
+Restart Keycloak If Keycloak was running before applying the changes, restart it to apply the new settings.
+
+
+
