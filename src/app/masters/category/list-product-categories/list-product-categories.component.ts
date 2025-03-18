@@ -24,17 +24,11 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 export class ListProductCategoriesComponent {
   
   categories: ProductCategory[] = [];
-  dataSource: MatTableDataSource<ProductCategory>;
+  dataSource: MatTableDataSource<ProductCategory> | undefined;
   editedId: number = 0;
   displayedColumns = ['id', 'name', 'actions'];
 
   constructor(private productService: ProductService, private commService: CommunicationService) {
-      this.productService.getAllCategories().subscribe((categories) => {
-          this.categories = categories;
-      });
-
-      this.dataSource = new MatTableDataSource(this.categories);
-
       this.commService.currentMessage.subscribe((message) => {
         if(message.type === MessageType.Added || message.type === MessageType.Updated || 
           message.type === MessageType.Deleted || message.type === MessageType.Refresh){

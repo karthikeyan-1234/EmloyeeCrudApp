@@ -31,8 +31,6 @@ export class ListCustomersComponent {
   editedId: number = 0;
 
   constructor(private service:CustomerService,private commService:CommunicationService){
-    this.refreshTable();
-
     this.commService.currentMessage.subscribe((message) => {
             if(message.type === MessageType.Added || message.type === MessageType.Updated || 
               message.type === MessageType.Deleted || message.type === MessageType.Refresh){

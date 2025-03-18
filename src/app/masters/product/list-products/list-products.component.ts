@@ -25,7 +25,7 @@ import { MessageType } from '../../../enums/message-type.enum';
   templateUrl: './list-products.component.html',
   styleUrl: './list-products.component.css'
 })
-export class ListProductsComponent implements OnInit {
+export class ListProductsComponent {
 
   @Input() products:Product[] = [];
   displayedColumns: string[] = ['id','name', 'category', 'actions'];
@@ -34,19 +34,6 @@ export class ListProductsComponent implements OnInit {
   categories: ProductCategory[] = [];
 
   constructor(private productService:ProductService,private commService:CommunicationService) {
-    
-
-    this.productService.getAllCategories().subscribe((res:ProductCategory[]) => {
-      console.log(res);
-      this.categories = res;
-    })
-
-    this.productService.getAllProducts().subscribe((res) => {
-      this.dataSource = new MatTableDataSource(res)
-    },(err) => {
-      
-    })
-
     this.commService.currentMessage.subscribe((message) => {
 
       console.log("List component subscribed message...",message);
@@ -58,10 +45,6 @@ export class ListProductsComponent implements OnInit {
       }
     })
 
-  }
-
-  ngOnInit(){
-    this.refreshTable();
   }
 
   compareCategories(c1: any, c2: any): boolean {
