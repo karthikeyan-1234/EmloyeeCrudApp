@@ -6,7 +6,7 @@ export function initializeKeycloak(keycloak: KeycloakService) {
       config: {
         url: 'http://localhost:8080',
         realm: 'master',
-        clientId: 'angular-app',
+        clientId: 'angular-app'
       },
       enableBearerInterceptor: true,
       bearerPrefix: 'Bearer',
